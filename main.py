@@ -9,7 +9,7 @@ valid_genres = ['action', 'adventure', 'comedy', 'drama', 'ecchi',
 
 valid_airing_status = ['releasing', 'finished']
 
-search_params = {
+search_params = {  # DICTIONARY FOR SEARCH PARAMETERS
     "genres": [],
     "airing_status": "",
     "min_episodes": 0,
@@ -42,24 +42,36 @@ def get_search_details():
         running = False
 
 
+def search_animes():
+    print(f'----------------------- \n'
+          f'SEARCHING ANIMES MATCHING: \n'
+          f'GENRES: {search_params["genres"]} \n'
+          f'AIRING STATUS: {search_params["airing_status"]}')
+
+    retrieved_animes = anilist.search_anime(genre=search_params["genres"], score=range(70, 100))
+    retrieved_animes = sorted(retrieved_animes, key=lambda x: x['average_score'], reverse=True)
+
+    for i in range(len(retrieved_animes) - 1, -1,
+                   -1):  # DELETE ANIME DICTIONARY IF AIRING_STATUS KEY DOES NOT MATCH THE SEARCH AIRING_STATUS
+        if retrieved_animes[i]["airing_status"].lower() != search_params["airing_status"].lower():
+            del retrieved_animes[i]
+
+    print(f'----------------------- \n'
+          f'# OF ANIMES RETRIEVED: {len(retrieved_animes)}')
+
+    return retrieved_animes
+
+
+def show_animes(animes):
+    for i in range(0, len(animes)):
+        print(f'----------------------- \n'
+              f'{animes[i]["name_romaji"]} \n'
+              f'{animes[i]["name_english"]} \n'
+              f'Rating: {animes[i]["average_score"]} \n'
+              f'Airing status: {animes[i]["airing_status"]} \n'
+              f'Genres: {animes[i]["genres"]}')
+
+
 get_search_details()
-
-print(f'----------------------- \n'
-      f'SEARCHING ANIMES MATCHING: \n'
-      f'GENRES: {search_params["genres"]}')
-
-anime = anilist.search_anime(genre=search_params["genres"], score=range(70, 100))
-anime = sorted(anime, key=lambda x: x['average_score'], reverse=True)
-
-print(f'----------------------- \n'
-      f'# of animes retrieved: {len(anime)}')
-
-for i in range(0, len(anime)):
-    if anime[i]["airing_status"].lower() == search_params["airing_status"].lower():
-        print("-----------------------")
-        print(anime[i]["name_romaji"])
-        if anime[i]["name_romaji"] != anime[i]["name_english"]:  # PRINT ENGLISH NAME IF DIFFERENT FROM ROMAJI
-            print(anime[i]["name_english"])
-        print(f'Rating: {anime[i]["average_score"]}')
-        print(anime[i]["airing_status"])
-        print(anime[i]["genres"])
+searched_animes = search_animes()
+show_animes(searched_animes)
