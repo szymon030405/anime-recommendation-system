@@ -19,7 +19,6 @@ search_params = {  # DICTIONARY FOR SEARCH PARAMETERS
 
 def get_search_details():
     running, flag_g, flag_as, flag_e = True, True, True, True
-
     while running:
         while flag_g:
             input_genre = input("Enter a genre, or enter 'end' to stop adding genres ")
@@ -48,11 +47,10 @@ def search_animes():
           f'GENRES: {search_params["genres"]} \n'
           f'AIRING STATUS: {search_params["airing_status"]}')
 
-    retrieved_animes = anilist.search_anime(genre=search_params["genres"], score=range(70, 100))
+    retrieved_animes = anilist.search_anime(genre=search_params["genres"], score=range(69, 100))
     retrieved_animes = sorted(retrieved_animes, key=lambda x: x['average_score'], reverse=True)
 
-    for i in range(len(retrieved_animes) - 1, -1,
-                   -1):  # DELETE ANIME DICTIONARY IF AIRING_STATUS KEY DOES NOT MATCH THE SEARCH AIRING_STATUS
+    for i in range(len(retrieved_animes) - 1, -1, -1):
         if retrieved_animes[i]["airing_status"].lower() != search_params["airing_status"].lower():
             del retrieved_animes[i]
 
@@ -63,13 +61,32 @@ def search_animes():
 
 
 def show_animes(animes):
-    for i in range(0, len(animes)):
-        print(f'----------------------- \n'
-              f'{animes[i]["name_romaji"]} \n'
-              f'{animes[i]["name_english"]} \n'
-              f'Rating: {animes[i]["average_score"]} \n'
-              f'Airing status: {animes[i]["airing_status"]} \n'
-              f'Genres: {animes[i]["genres"]}')
+    running = True
+
+    while running:
+        choice = input("Display simple or detailed list? Type ")
+
+        if choice.lower() == 'simple':
+            running = False
+            print(f'----------------------- \n'
+                  f'SIMPLE LIST: \n'
+                  f'Rating | Anime name')
+            for i in range(0, len(animes)):
+                print(f'{animes[i]["average_score"]} | {animes[i]["name_romaji"]}')
+
+        elif choice.lower() == 'detailed':
+            running = False
+            print(f'DETAILED LIST:')
+            for i in range(0, len(animes)):
+                print(f'----------------------- \n'
+                      f'{animes[i]["name_romaji"]} \n'
+                      f'{animes[i]["name_english"]} \n'
+                      f'Rating: {animes[i]["average_score"]} \n'
+                      f'Airing status: {animes[i]["airing_status"]} \n'
+                      f'Genres: {animes[i]["genres"]}')
+
+        else:
+            print("INVALID LIST CHOICE, TRY AGAIN")
 
 
 get_search_details()
