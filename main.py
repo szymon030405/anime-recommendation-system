@@ -23,7 +23,7 @@ class Search:
         self.anime_list = []
 
     def get_search_details(self):
-        running, flag_g, flag_as, flag_e = True, True, True, True
+        running, flag_g, flag_as, flag_s = True, True, True, True
         while running:
             while flag_g:
                 input_genre = input("Enter a genre, or enter 'end' to stop adding genres ")
@@ -43,6 +43,9 @@ class Search:
                     flag_as = False
                 else:
                     print("INVALID AIRING STATUS, TRY AGAIN")
+            while flag_s:
+                pass
+                flag_s = False
             running = False
 
     def print_search_details(self):
