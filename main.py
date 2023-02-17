@@ -53,7 +53,6 @@ class Search:
         searched_animes = anilist.search_anime(genre=self.search_details["genres"], score=range(69, 100))
         searched_animes = sorted(searched_animes, key=lambda x: x['average_score'], reverse=True)
 
-        # test difference between for i in range(0, len(searched_animes)) VS for i in searched_animes
         for i in range(len(searched_animes)):
             if searched_animes[i]["airing_status"].lower() == self.search_details["airing_status"].lower():
                 self.anime_list.append(searched_animes[i])
