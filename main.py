@@ -23,7 +23,7 @@ class Search:
         self.anime_list = []
 
     def get_search_details(self):
-        running, flag_g, flag_as, flag_e = True, True, True, True
+        running, flag_g, flag_as, flag_s = True, True, True, True
         while running:
             while flag_g:
                 input_genre = input("Enter a genre, or enter 'end' to stop adding genres ")
@@ -43,10 +43,12 @@ class Search:
                     flag_as = False
                 else:
                     print("INVALID AIRING STATUS, TRY AGAIN")
+            while flag_s:
+                pass
+                flag_s = False
             running = False
 
     def print_search_details(self):
-
         for key, value in self.search_details.items():
             print(f'{key}: {value}')
 
@@ -54,7 +56,6 @@ class Search:
         searched_animes = anilist.search_anime(genre=self.search_details["genres"], score=range(69, 100))
         searched_animes = sorted(searched_animes, key=lambda x: x['average_score'], reverse=True)
 
-        # test difference between for i in range(0, len(searched_animes)) VS for i in searched_animes
         for i in range(len(searched_animes)):
             if searched_animes[i]["airing_status"].lower() == self.search_details["airing_status"].lower():
                 self.anime_list.append(searched_animes[i])
