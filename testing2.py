@@ -1,7 +1,7 @@
 from AnilistPython import Anilist
 
 
-# similarity / match percentage : 0.35 * (rating ) + 0.2 *(genres in anime / all genres inputted by user) + 0.15(if the anime is in the year range) + 0.3 (abs(preferredEpisodes-actualEpisodes)/preferredEpisodes) +  
+# similarity / match percentage : 0.35 * (rating ) + 0.2 *(genres in anime / all genres inputted by user) + 0.15(if the anime is in the year range) + 0.3 (abs(preferredEpisodes-actualEpisodes)/preferredEpisodes) + 
 aniList = Anilist()
 valid_genres = ['action', 'adventure', 'comedy', 'drama', 'ecchi',
                 'fantasy', 'horror', 'mahou', 'shoujo', 'mecha', 'music',
@@ -27,7 +27,7 @@ animes = aniList.search_anime()
 #note : only append the anime if its similarity score is over 75%
 highestSimilarityScores = {} # dictionary mapping anime names to similarity scores
 for anime in range (0, len(animes)) # list of animes found using the search_anime function
-    similarityScore = #(0.35 * (rating ) + 0.2 *(genres in anime / all genres inputted by user) + 0.15(if the anime is in the year range) + 0.3 (abs(preferredEpisodes-actualEpisodes)/preferredEpisodes) + (0.05 * popularity) + (0.05 * custom Desc match )
+    similarityScore = #(0.35 * (rating ) + 0.2 *(all genres inputted by usergenres in anime ) + 0.15(if the anime is in the year range) + 0.3 (abs(preferredEpisodes-actualEpisodes)/preferredEpisodes) + (0.05 * popularity) + (0.05 * custom Desc match )
     #popularity:  
     # < 250: x1
     # 250 < x < 500 : 0.9x
