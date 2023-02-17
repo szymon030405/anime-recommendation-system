@@ -13,7 +13,7 @@ valid_parameters = {  # DICTIONARY FOR VALID PARAMETERS
 
 class Search:
     def __init__(self):
-        self.search_parameters = {  # DICTIONARY FOR SEARCH PARAMETERS
+        self.search_details = {  # DICTIONARY FOR SEARCH PARAMETERS
             "genres": [],
             "airing_status": "",
             "min_episodes": 0,
@@ -31,14 +31,14 @@ class Search:
                     flag_g = False
                 else:
                     if input_genre.lower() in valid_parameters["valid_genres"]:
-                        self.search_parameters["genres"].append(input_genre)
+                        self.search_details["genres"].append(input_genre)
                         print("GENRE ADDED TO SEARCH PARAMS DICT")
                     else:
                         print("INVALID GENRE, TRY AGAIN")
             while flag_as:
                 input_airing_status = input("Releasing, finished, or any ")
                 if input_airing_status.lower() in valid_parameters["valid_airing_status"]:
-                    self.search_parameters["airing_status"] = input_airing_status
+                    self.search_details["airing_status"] = input_airing_status
                     print("AIRING STATUS ADDED TO SEARCH PARAMS DICT")
                     flag_as = False
                 else:
@@ -46,23 +46,18 @@ class Search:
             running = False
 
     def print_search_details(self):
-        for key, value in self.search_parameters.items():
+
+        for key, value in self.search_details.items():
             print(f'{key}: {value}')
 
     def search_animes(self):
-        print(f'----------------------- \n'
-              f'SEARCHING ANIMES MATCHING: \n'
-              f'GENRES: {self.search_parameters["genres"]} \n'
-              f'AIRING STATUS: {self.search_parameters["airing_status"]}')
-
-        searched_animes = anilist.search_anime(genre=self.search_parameters["genres"], score=range(69, 100))
+        searched_animes = anilist.search_anime(genre=self.search_details["genres"], score=range(69, 100))
         searched_animes = sorted(searched_animes, key=lambda x: x['average_score'], reverse=True)
 
-        for i in range(len(searched_animes) - 1, -1, -1):
-            if searched_animes[i]["airing_status"].lower() != self.search_parameters["airing_status"].lower():
-                del searched_animes[i]
-
-        self.anime_list = searched_animes
+        # test difference between for i in range(0, len(searched_animes)) VS for i in searched_animes
+        for i in range(len(searched_animes)):
+            if searched_animes[i]["airing_status"].lower() == self.search_details["airing_status"].lower():
+                self.anime_list.append(searched_animes[i])
 
     def show_animes(self):
         running = True
