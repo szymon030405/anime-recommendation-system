@@ -46,7 +46,6 @@ class Search:
             running = False
 
     def print_search_details(self):
-
         for key, value in self.search_details.items():
             print(f'{key}: {value}')
 
