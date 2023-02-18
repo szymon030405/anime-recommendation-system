@@ -15,6 +15,10 @@ for i in range(10,0,-1):
 
 animes = anilist.search_anime(genre="Sports", score=range(70, 100))
 
+for i in range(0,len(animes)){
+    animes[i]  = animes[i].get_anime(animes[i]["name_romaji"], deepsearch = True)
+}
+
 for i in range(0,len(animes)):
     print(f'{animes[i]["name_romaji"]} \n'
           f'{animes[i]["airing_status"]}')
