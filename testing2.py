@@ -36,8 +36,6 @@ preferredEpisodes = int(preferredEpisodes)
 animeMatches = aniList.search_anime(genre = genres, year = yearRange, score = range(70,100))
 animeMatches = sorted(animeMatches,key = lambda x: x['average_score'], reverse = True)
 
-currYear = ["None/None/None"]
-
 animeMatchesAiring = aniList.search_anime(genre = genres, year = yearRange,score = range(70,100)) #FIXME
 animeMatchesAiring = sorted(animeMatches,key = lambda x: x['average_score'], reverse = True)
 
